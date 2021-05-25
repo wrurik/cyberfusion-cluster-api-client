@@ -12,6 +12,11 @@ detailed information.
 
 - Add default of empty string to setName in Cluster model's fromArray
 
+## Fixed
+
+- Fix error with deployment due to affected clusters not being initialized.
+- Fix error with the document root files being `null` when no files are present but an array is expected.
+
 ## [1.21.1]
 
 ### Changed
