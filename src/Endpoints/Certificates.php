@@ -23,7 +23,7 @@ class Certificates extends Endpoint
 
         $request = (new Request())
             ->setMethod(Request::METHOD_GET)
-            ->setUrl(sprintf('certificates?%s', http_build_query($filter->toArray())));
+            ->setUrl(sprintf('certificates?%s', $filter->toQuery()));
 
         $response = $this
             ->client
@@ -77,6 +77,8 @@ class Certificates extends Endpoint
             : ['certificate', 'ca_chain', 'private_key', 'cluster_id']; // Supply own certificate
         $this->validateRequired($certificate, 'create', $requiredAttributes);
 
+        $isLetEnscrypt = $certificate->isLetsEncrypt();
+
         $request = (new Request())
             ->setMethod(Request::METHOD_POST)
             ->setUrl('certificates')
@@ -98,9 +100,11 @@ class Certificates extends Endpoint
         $certificate = (new Certificate())->fromArray($response->getData());
 
         // Log which cluster is affected by this change
-        $this
-            ->client
-            ->addAffectedCluster($certificate->getClusterId());
+        if (!$isLetEnscrypt) {
+            $this
+                ->client
+                ->addAffectedCluster($certificate->getClusterId());
+        }
 
         return $response->setData([
             'certificate' => $certificate,
@@ -114,12 +118,13 @@ class Certificates extends Endpoint
      */
     public function update(Certificate $certificate): Response
     {
-        $this->validateRequired($certificate, 'update', ['id', 'cluster_id']);
+        $this->validateRequired($certificate, 'update', ['id', 'cluster_id', 'main_common_name']);
 
         $request = (new Request())
             ->setMethod(Request::METHOD_PATCH)
             ->setUrl(sprintf('certificates/%d', $certificate->getId()))
             ->setBody($this->filterFields($certificate->toArray(), [
+                'main_common_name',
                 'common_names',
                 'certificate',
                 'ca_chain',

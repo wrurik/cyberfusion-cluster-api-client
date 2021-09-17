@@ -6,6 +6,92 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 cluster API. See the changelog of the [cluster API](https://cluster-api.cyberfusion.nl/redoc#section/Changelog) for 
 detailed information.
 
+## [1.27.0]
+
+### Changed
+
+- The `from_timestamp_date` parameter is now required for Borg Repository Usages, Database Usages, Mail Account Usages 
+  and Unix User Usages.
+- Update to [API version 1.65](https://cluster-api.cyberfusion.nl/redoc#section/Changelog/1.65-2021-09-02)
+
+## [1.26.0]
+
+### Added
+
+- Add `description` to unix user.
+- Add `borg_repositories_directory` to unix user.
+
+### Changed
+
+- Change `process_idle_timeout` to `10`.
+
+### Removed
+
+- Remove commands endpoint and model.
+- Remove `command_toolkit_enabled` from cluster.
+
+## [1.25.0]
+
+### Added
+
+- Add `bubblewrap_toolkit_enabled` to cluster.
+- Add `main_common_name` to certificate.
+
+## [1.24.2]
+
+### Fixed
+
+- The CMS model required fields which might not be present when creating a CMS.
+
+## [1.24.1]
+
+### Fixed
+
+- The list filter now works properly and works with multiple filter arguments.
+
+## [1.24.0]
+
+### Added
+
+- Add create, delete and install methods to the CMS endpoint. 
+- Add `is_active` property to crons. 
+- Add async support to UnixUsers.
+- Add the max limit to list requests.
+
+### Changed
+
+- Change the email address to be optional for crons. 
+- Update to [API version 1.56](https://cluster-api.cyberfusion.nl/redoc#section/Changelog/1.56-2021-07-13)
+
+## [1.23.1]
+
+### Fixed
+
+- Change the databases usages endpoint which now correctly handles empty usage. Thanks to @Arne-Jan.
+
+## [1.23.0]
+
+### Changed
+
+- Requesting a Let's Encrypt certificate not longer requires a cluster deployment.
+- Update to [API version 1.48](https://cluster-api.cyberfusion.nl/redoc#section/Changelog/1.48-2021-06-17)
+
+### Fixed
+
+- Change the `Str::match` to `Str::doesMatch` to not conflict with new Laravel helper.
+
+## [1.22.0]
+
+### Added
+
+- Add regex validation to the name of a database user.
+- Add `locking_enabled` property to crons.
+
+### Changed
+
+- Change regex validation to allow capticals for the `table_name` of a database user grant.
+- Update to [API version 1.47](https://cluster-api.cyberfusion.nl/redoc#section/Changelog/1.47-2021-06-04)
+
 ## [1.21.2]
 
 ### Changed

@@ -23,7 +23,7 @@ class Crons extends Endpoint
 
         $request = (new Request())
             ->setMethod(Request::METHOD_GET)
-            ->setUrl(sprintf('crons?%s', http_build_query($filter->toArray())));
+            ->setUrl(sprintf('crons?%s', $filter->toQuery()));
 
         $response = $this
             ->client
@@ -75,7 +75,6 @@ class Crons extends Endpoint
         $this->validateRequired($cron, 'create', [
             'name',
             'command',
-            'email_address',
             'schedule',
             'unix_user_id',
         ]);
@@ -90,6 +89,8 @@ class Crons extends Endpoint
                 'schedule',
                 'unix_user_id',
                 'error_count',
+                'locking_enabled',
+                'is_active',
             ]));
 
         $response = $this
@@ -121,7 +122,6 @@ class Crons extends Endpoint
         $this->validateRequired($cron, 'update', [
             'name',
             'command',
-            'email_address',
             'schedule',
             'unix_user_id',
             'id',
@@ -138,6 +138,8 @@ class Crons extends Endpoint
                 'schedule',
                 'unix_user_id',
                 'error_count',
+                'locking_enabled',
+                'is_active',
                 'id',
                 'cluster_id',
             ]));
